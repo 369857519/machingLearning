@@ -1,0 +1,7 @@
+练习 Activation Function Quiz
+我们已经决定使用一个连续(避免离散问题)并且非线性(允许我们表示非线性)的方程，以下哪个方程满足我们的需求？
+□ Sine
+□ Arctangent
+□ Natural logarithm
+□ Cube root
+□ Logistic function
