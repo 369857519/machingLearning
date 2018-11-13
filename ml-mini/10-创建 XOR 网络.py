@@ -35,7 +35,7 @@ class Perceptron:
         """
 
         # First calculate the strength with which the perceptron fires
-        strength = np.dot(values, self.weights)
+        strength = np.sum(np.dot(values, self.weights))
 
         # Then return 0 or 1 depending on strength compared to threshold  
         return int(strength > self.threshold)
@@ -47,7 +47,7 @@ Network = [
     # input layer, declare input layer perceptrons here
     [[0.5, 0.5, 0.75], [0.5, 0.5, 0.25]],
     # output node, declare output layer perceptron here
-    [[-1, 1]]
+    [[-1, 1, 0]]
 ]
 
 
@@ -58,18 +58,17 @@ def EvalNetwork(inputValues, Network):
     that specifies a perceptron network. @return the output of the Network for
     the given set of inputs.
     """
-    OutputValue=1;
+    OutputValue = 1;
     for i, v in enumerate(Network):
         # 操作第N层
-        res=[1]*len()
-        newInput=[]
-        for j, perceptron in enumerate(v):
-            perceptron=Perceptron(v);
-            newInput[i]=perceptron.activate(inputValues)
-        inputValues=newInput;
+        newInput = [0] * len(v);
+        for j, weight in enumerate(v):
+            perceptron = Perceptron([weight[0], weight[1]], weight[2]);
+            newInput[j] = perceptron.activate(inputValues)
+        inputValues = newInput;
     # YOUR CODE HERE
-    if(len(newInput) == 1):
-        OutputValue=newInput[0];
+    if (len(newInput) == 1):
+        OutputValue = newInput[0];
     # Be sure your output value is a single number
     return OutputValue
 
