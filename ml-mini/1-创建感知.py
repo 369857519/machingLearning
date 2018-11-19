@@ -9,6 +9,7 @@
 
 
 import numpy as np
+from functools import reduce
 
 
 class Perceptron:
@@ -16,27 +17,32 @@ class Perceptron:
     This class models an artificial neuron with step activation function.
     """
 
-    def __init__(self, weights = np.array([1]), threshold = 0):
+    def __init__(self, weights=np.array([1]), threshold=0):
         """
         Initialize weights and threshold based on input arguments. Note that no
         type-checking is being performed here for simplicity.
         """
         self.weights = weights
         self.threshold = threshold
-    
-    def activate(self,inputs):
+
+    def activate(self, inputs):
         """
         Takes in @param inputs, a list of numbers equal to length of weights.
         @return the output of a threshold perceptron with given inputs based on
         perceptron weights and threshold.
-        """ 
+        """
 
         # INSERT YOUR CODE HERE
 
-        # TODO: calculate the strength with which the perceptron fires
-
+        # TODO: calculate the strengh with which the perceptron fires
+        multiply = map(lambda x: x[0] * x[1], zip(self.weights, inputs));
+        output = reduce(lambda x, y: x + y, multiply);
         # TODO: return 0 or 1 based on the threshold
-            
+        if output > self.threshold:
+            return 1
+        else:
+            return 0
+
         return result
 
 
@@ -46,9 +52,10 @@ def test():
     Nothing should show up in the output if all the assertions pass.
     """
     p1 = Perceptron(np.array([1, 2]), 0.)
-    assert p1.activate(np.array([ 1,-1])) == 0 # < threshold --> 0
-    assert p1.activate(np.array([-1, 1])) == 1 # > threshold --> 1
-    assert p1.activate(np.array([ 2,-1])) == 0 # on threshold --> 0
+    assert p1.activate(np.array([1, -1])) == 0  # < threshold --> 0
+    assert p1.activate(np.array([-1, 1])) == 1  # > threshold --> 1
+    assert p1.activate(np.array([2, -1])) == 0  # on threshold --> 0
+
 
 if __name__ == "__main__":
     test()
