@@ -16,20 +16,42 @@ print(X_test.shape, type(y_test))
 
 X_train = X_train.astype('float32')
 X_test = X_test.astype('float32')
-X_train/=255
-X_test/=255
+X_train /= 255
+X_test /= 255
 
 # 观察标签
 
 import numpy as np
 import matplotlib.pyplot as plt
-label,count=np.unique(y_train,return_counts=True)
-print(label,count)
 
-#one hot
-n_classes=10
+label, count = np.unique(y_train, return_counts=True)
+print(label, count)
+
+# one hot
+n_classes = 10
 print(y_train.shape)
-Y_train=np_utils.to_categorical(y_train,n_classes)
+Y_train = np_utils.to_categorical(y_train, n_classes)
 print(Y_train.shape)
-Y_test=np_utils.to_categorical(y_test,n_classes)
+Y_test = np_utils.to_categorical(y_test, n_classes)
+print(y_train[0])
+print(Y_train[0])
 
+# 神经网络定义网络
+from keras.models import Sequential
+from keras.layers.core import Dense, Activation
+
+model = Sequential()
+model.add(Dense(512, input_shape=(784,)))
+model.add(Activation('relu'))
+
+model.add(Dense(512))
+model.add(Activation('relu'))
+
+model.add(Dense(10))
+model.add(Activation('softmax'))
+
+model.compile(loss='categorical_crossentropy', metrics=['accuracy'], optimizer='adam')
+
+hisotry = model.fit(X_train, Y_train, batch_size=128, epochs=5, verbose=2, validation_data=(X_test, Y_test))
+
+###卷积神经网络
